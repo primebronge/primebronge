@@ -1,21 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
   <title>PRIME BRONGE | Gaming</title>
 
-  <!-- Google Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome -->
+  <!-- =========================
+       GOOGLE FONT
+  ========================== -->
+
+  <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+  <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+
+  <!-- =========================
+       FONT AWESOME
+  ========================== -->
+
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+
   <style>
+
+    /* =========================
+       RESET
+    ========================== */
 
     * {
       margin: 0;
@@ -23,173 +46,323 @@
       box-sizing: border-box;
     }
 
+
     html {
       scroll-behavior: smooth;
     }
 
+
     body {
+
       min-height: 100vh;
+
       font-family: 'Orbitron', sans-serif;
+
       background: #030305;
+
       color: #fff;
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       overflow-x: hidden;
+
       position: relative;
+
     }
+
 
     /* =========================
        ANIMATED BACKGROUND
-    ========================= */
+    ========================== */
 
     .bg-effects {
+
       position: fixed;
+
       inset: 0;
+
       overflow: hidden;
+
       pointer-events: none;
+
       z-index: 0;
 
       background:
+
         radial-gradient(
+
           circle at 50% 45%,
+
           rgba(255, 0, 70, 0.08),
+
           transparent 35%
+
         );
+
     }
 
+
+    /* Background Grid */
+
     .bg-effects::before {
+
       content: "";
+
       position: absolute;
+
       inset: 0;
 
       background-image:
+
         linear-gradient(
+
           rgba(255,255,255,0.025) 1px,
+
           transparent 1px
+
         ),
+
         linear-gradient(
+
           90deg,
+
           rgba(255,255,255,0.025) 1px,
+
           transparent 1px
+
         );
 
       background-size: 45px 45px;
 
-      mask-image: linear-gradient(
-        to bottom,
-        transparent,
-        black 20%,
-        black 80%,
-        transparent
-      );
+      mask-image:
+
+        linear-gradient(
+
+          to bottom,
+
+          transparent,
+
+          black 20%,
+
+          black 80%,
+
+          transparent
+
+        );
+
     }
 
-    /* Glowing Orbs */
+
+    /* =========================
+       GLOWING ORBS
+    ========================== */
 
     .orb {
+
       position: absolute;
+
       border-radius: 50%;
+
       filter: blur(75px);
+
       opacity: .55;
-      animation: floatOrb 9s ease-in-out infinite alternate;
+
+      animation:
+
+        floatOrb 9s ease-in-out infinite alternate;
+
     }
+
 
     .orb-1 {
+
       width: 300px;
+
       height: 300px;
-      background: rgba(255, 0, 70, .23);
+
+      background:
+
+        rgba(255, 0, 70, .23);
+
       top: -100px;
+
       left: -100px;
+
     }
+
 
     .orb-2 {
+
       width: 380px;
+
       height: 380px;
-      background: rgba(110, 0, 255, .16);
+
+      background:
+
+        rgba(110, 0, 255, .16);
+
       right: -140px;
+
       top: 25%;
+
       animation-delay: -3s;
+
     }
 
+
     .orb-3 {
+
       width: 280px;
+
       height: 280px;
-      background: rgba(255, 20, 80, .18);
+
+      background:
+
+        rgba(255, 20, 80, .18);
+
       bottom: -100px;
+
       left: 35%;
+
       animation-delay: -5s;
+
     }
+
 
     @keyframes floatOrb {
 
       0% {
-        transform: translate(0, 0) scale(1);
+
+        transform:
+
+          translate(0, 0)
+
+          scale(1);
+
       }
+
 
       50% {
-        transform: translate(80px, 40px) scale(1.15);
+
+        transform:
+
+          translate(80px, 40px)
+
+          scale(1.15);
+
       }
 
+
       100% {
-        transform: translate(-40px, -60px) scale(.9);
+
+        transform:
+
+          translate(-40px, -60px)
+
+          scale(.9);
+
       }
 
     }
 
-    /* Moving Light Beams */
+
+    /* =========================
+       LIGHT BEAMS
+    ========================== */
 
     .light-beam {
+
       position: absolute;
+
       width: 2px;
+
       height: 140%;
+
       top: -20%;
+
       opacity: .25;
+
       filter: blur(2px);
 
       background:
+
         linear-gradient(
+
           transparent,
+
           #ff174f,
+
           transparent
+
         );
 
       transform: rotate(25deg);
 
-      animation: beamMove 8s linear infinite;
+      animation:
+
+        beamMove 8s linear infinite;
+
     }
+
 
     .beam-1 {
+
       left: 15%;
+
     }
 
+
     .beam-2 {
+
       right: 20%;
+
       animation-delay: -4s;
+
       opacity: .14;
+
     }
+
 
     @keyframes beamMove {
 
       0% {
+
         transform:
+
           translateX(-600px)
+
           rotate(25deg);
+
       }
 
+
       100% {
+
         transform:
+
           translateX(900px)
+
           rotate(25deg);
+
       }
 
     }
 
-    /* Floating Particles */
+
+    /* =========================
+       PARTICLES
+    ========================== */
 
     .particles span {
+
       position: absolute;
+
       width: 3px;
+
       height: 3px;
 
       background: #ff315e;
@@ -197,241 +370,419 @@
       border-radius: 50%;
 
       box-shadow:
-        0 0 10px #ff174f,
-        0 0 20px rgba(255,0,70,.5);
 
-      animation: particleFloat linear infinite;
+        0 0 10px #ff174f,
+
+        0 0 20px
+
+        rgba(255,0,70,.5);
+
+      animation:
+
+        particleFloat
+
+        linear
+
+        infinite;
+
     }
+
 
     .particles span:nth-child(1) {
+
       left: 5%;
+
       top: 80%;
+
       animation-duration: 7s;
+
     }
+
 
     .particles span:nth-child(2) {
+
       left: 12%;
+
       top: 30%;
+
       animation-duration: 9s;
+
     }
+
 
     .particles span:nth-child(3) {
+
       left: 20%;
+
       top: 65%;
+
       animation-duration: 6s;
+
     }
+
 
     .particles span:nth-child(4) {
+
       left: 28%;
+
       top: 15%;
+
       animation-duration: 8s;
+
     }
+
 
     .particles span:nth-child(5) {
+
       left: 35%;
+
       top: 85%;
+
       animation-duration: 10s;
+
     }
+
 
     .particles span:nth-child(6) {
+
       left: 43%;
+
       top: 40%;
+
       animation-duration: 7s;
+
     }
+
 
     .particles span:nth-child(7) {
+
       left: 50%;
+
       top: 75%;
+
       animation-duration: 9s;
+
     }
+
 
     .particles span:nth-child(8) {
+
       left: 58%;
+
       top: 20%;
+
       animation-duration: 6s;
+
     }
+
 
     .particles span:nth-child(9) {
+
       left: 65%;
+
       top: 60%;
+
       animation-duration: 8s;
+
     }
+
 
     .particles span:nth-child(10) {
+
       left: 72%;
+
       top: 10%;
+
       animation-duration: 7s;
+
     }
+
 
     .particles span:nth-child(11) {
+
       left: 78%;
+
       top: 80%;
+
       animation-duration: 10s;
+
     }
+
 
     .particles span:nth-child(12) {
+
       left: 84%;
+
       top: 35%;
+
       animation-duration: 6s;
+
     }
+
 
     .particles span:nth-child(13) {
+
       left: 90%;
+
       top: 70%;
+
       animation-duration: 9s;
+
     }
+
 
     .particles span:nth-child(14) {
+
       left: 95%;
+
       top: 20%;
+
       animation-duration: 7s;
+
     }
+
 
     .particles span:nth-child(15) {
+
       left: 40%;
+
       top: 5%;
+
       animation-duration: 8s;
+
     }
 
+
     .particles span:nth-child(16) {
+
       left: 60%;
+
       top: 90%;
+
       animation-duration: 6s;
+
     }
+
 
     @keyframes particleFloat {
 
       0% {
+
         transform:
+
           translateY(50px)
+
           scale(.5);
+
         opacity: 0;
+
       }
+
 
       20% {
+
         opacity: 1;
+
       }
+
 
       80% {
+
         opacity: .8;
+
       }
 
+
       100% {
+
         transform:
+
           translateY(-170px)
+
           scale(1);
+
         opacity: 0;
+
       }
 
     }
 
+
     /* =========================
        MAIN CARD
-    ========================= */
+    ========================== */
 
     .card {
+
       width: min(92%, 600px);
 
-      padding: 45px 30px 35px;
+      padding:
+
+        45px 30px 35px;
 
       margin: 30px 0;
 
       text-align: center;
 
       background:
+
         linear-gradient(
+
           145deg,
+
           rgba(15,15,18,.92),
+
           rgba(5,5,7,.88)
+
         );
 
       border:
-        1px solid rgba(255,255,255,.10);
+
+        1px solid
+
+        rgba(255,255,255,.10);
 
       border-radius: 25px;
 
       backdrop-filter: blur(18px);
+
       -webkit-backdrop-filter: blur(18px);
 
       box-shadow:
-        0 0 40px rgba(0,0,0,.85),
-        0 0 100px rgba(255,0,70,.07),
-        inset 0 0 30px rgba(255,255,255,.015);
+
+        0 0 40px
+
+        rgba(0,0,0,.85),
+
+        0 0 100px
+
+        rgba(255,0,70,.07),
+
+        inset 0 0 30px
+
+        rgba(255,255,255,.015);
 
       position: relative;
 
       z-index: 5;
 
       overflow: hidden;
+
     }
 
+
+    /* =========================
+       CARD TOP GLOW
+    ========================== */
+
     .card::before {
+
       content: "";
 
       position: absolute;
 
       top: -2px;
+
       left: 15%;
 
       width: 70%;
+
       height: 2px;
 
       background:
+
         linear-gradient(
+
           90deg,
+
           transparent,
+
           #ff174f,
+
           transparent
+
         );
 
       box-shadow:
+
         0 0 20px #ff174f,
+
         0 0 50px #ff174f;
 
       animation:
-        cardGlow 3s ease-in-out infinite;
+
+        cardGlow
+
+        3s
+
+        ease-in-out
+
+        infinite;
+
     }
+
 
     @keyframes cardGlow {
 
       0%,100% {
+
         opacity: .4;
+
       }
 
+
       50% {
+
         opacity: 1;
+
       }
 
     }
+
 
     /* =========================
        TOP LINE
-    ========================= */
+    ========================== */
 
     .top-line {
+
       width: 100px;
+
       height: 3px;
 
-      margin: 0 auto 30px;
+      margin:
+
+        0 auto 30px;
 
       background:
+
         linear-gradient(
+
           90deg,
+
           transparent,
+
           #ff174f,
+
           transparent
+
         );
 
       box-shadow:
+
         0 0 15px #ff174f;
+
     }
+
 
     /* =========================
        LOGO
-    ========================= */
+    ========================== */
 
     .logo-box {
+
       width: 145px;
+
       height: 145px;
 
       margin: auto;
@@ -441,23 +792,46 @@
       padding: 5px;
 
       background:
+
         linear-gradient(
+
           135deg,
+
           #ff174f,
+
           #ff004c,
+
           #5b0019
+
         );
 
       box-shadow:
-        0 0 25px rgba(255,0,70,.5),
-        0 0 70px rgba(255,0,70,.15);
+
+        0 0 25px
+
+        rgba(255,0,70,.5),
+
+        0 0 70px
+
+        rgba(255,0,70,.15);
 
       animation:
-        logoPulse 2.5s infinite ease-in-out;
+
+        logoPulse
+
+        2.5s
+
+        infinite
+
+        ease-in-out;
+
     }
 
+
     .logo-box img {
+
       width: 100%;
+
       height: 100%;
 
       object-fit: cover;
@@ -467,31 +841,55 @@
       background: #080808;
 
       display: block;
+
     }
+
 
     @keyframes logoPulse {
 
       0%,100% {
+
         box-shadow:
-          0 0 25px rgba(255,0,70,.5);
+
+          0 0 25px
+
+          rgba(255,0,70,.5);
+
       }
 
+
       50% {
+
         box-shadow:
-          0 0 45px rgba(255,0,70,.85);
+
+          0 0 45px
+
+          rgba(255,0,70,.85);
+
       }
 
     }
 
+
     /* =========================
        NAME
-    ========================= */
+    ========================== */
 
     .name {
+
       margin-top: 25px;
 
       font-size:
-        clamp(30px, 7vw, 52px);
+
+        clamp(
+
+          30px,
+
+          7vw,
+
+          52px
+
+        );
 
       font-weight: 900;
 
@@ -500,11 +898,20 @@
       color: #fff;
 
       text-shadow:
-        0 0 10px rgba(255,255,255,.3),
-        0 0 25px rgba(255,0,70,.5);
+
+        0 0 10px
+
+        rgba(255,255,255,.3),
+
+        0 0 25px
+
+        rgba(255,0,70,.5);
+
     }
 
+
     .tag {
+
       margin-top: 8px;
 
       font-size: 12px;
@@ -514,16 +921,21 @@
       color: #ff315e;
 
       font-weight: 700;
+
     }
+
 
     /* =========================
        BIO
-    ========================= */
+    ========================== */
 
     .bio {
+
       max-width: 470px;
 
-      margin: 25px auto 30px;
+      margin:
+
+        25px auto 30px;
 
       color: #aaa;
 
@@ -532,17 +944,23 @@
       font-size: 15px;
 
       line-height: 1.7;
+
     }
 
+
     .bio b {
+
       color: #fff;
+
     }
+
 
     /* =========================
        SOCIAL TITLE
-    ========================= */
+    ========================== */
 
     .social-title {
+
       font-size: 12px;
 
       letter-spacing: 4px;
@@ -550,22 +968,29 @@
       color: #777;
 
       margin-bottom: 15px;
+
     }
+
 
     /* =========================
        SOCIAL BUTTONS
-    ========================= */
+    ========================== */
 
     .socials {
+
       display: grid;
 
       grid-template-columns:
+
         repeat(2, 1fr);
 
       gap: 12px;
+
     }
 
+
     .social-btn {
+
       position: relative;
 
       height: 58px;
@@ -583,12 +1008,15 @@
       text-decoration: none;
 
       border:
+
         1px solid
+
         rgba(255,255,255,.12);
 
       border-radius: 12px;
 
       background:
+
         rgba(255,255,255,.035);
 
       overflow: hidden;
@@ -598,9 +1026,12 @@
       font-size: 13px;
 
       font-weight: 700;
+
     }
 
+
     .social-btn::before {
+
       content: "";
 
       position: absolute;
@@ -608,76 +1039,343 @@
       inset: 0;
 
       background:
+
         linear-gradient(
+
           90deg,
+
           transparent,
+
           rgba(255,255,255,.10),
+
           transparent
+
         );
 
       transform:
+
         translateX(-100%);
 
       transition: .5s;
+
     }
+
 
     .social-btn:hover::before {
+
       transform:
+
         translateX(100%);
+
     }
 
+
     .social-btn:hover {
+
       transform:
+
         translateY(-5px);
 
       border-color:
+
         #ff174f;
 
       box-shadow:
+
         0 8px 25px
+
         rgba(255,0,70,.20),
 
         inset 0 0 20px
+
         rgba(255,0,70,.05);
+
     }
 
+
     .social-btn i {
+
       font-size: 21px;
 
       transition: .3s;
+
     }
 
+
     .social-btn:hover i {
+
       transform:
+
         scale(1.2);
 
       filter:
+
         drop-shadow(
-          0 0 8px currentColor
+
+          0 0 8px
+
+          currentColor
+
         );
+
     }
+
+
+    /* Platform Colors */
 
     .youtube i {
+
       color: #ff0033;
+
     }
+
 
     .tiktok i {
+
       color: #fff;
+
     }
+
 
     .instagram i {
+
       color: #ff4f9a;
+
     }
 
+
     .facebook i {
+
       color: #1877f2;
+
     }
+
+
+    /* =========================
+       DISCORD SECTION
+    ========================== */
+
+    .discord-section {
+
+      margin-top: 18px;
+
+      padding: 16px;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+      text-align: left;
+
+      border:
+
+        1px solid
+
+        rgba(88,101,242,.25);
+
+      border-radius: 14px;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          rgba(88,101,242,.08),
+
+          rgba(255,255,255,.025)
+
+        );
+
+      box-shadow:
+
+        inset 0 0 25px
+
+        rgba(88,101,242,.03);
+
+      transition: .3s ease;
+
+    }
+
+
+    .discord-section:hover {
+
+      border-color:
+
+        rgba(88,101,242,.65);
+
+      box-shadow:
+
+        0 8px 30px
+
+        rgba(88,101,242,.12),
+
+        inset 0 0 25px
+
+        rgba(88,101,242,.05);
+
+      transform:
+
+        translateY(-3px);
+
+    }
+
+
+    /* Discord Icon */
+
+    .discord-icon {
+
+      min-width: 48px;
+
+      width: 48px;
+
+      height: 48px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      border-radius: 12px;
+
+      background:
+
+        rgba(88,101,242,.15);
+
+      border:
+
+        1px solid
+
+        rgba(88,101,242,.3);
+
+      color: #5865F2;
+
+      font-size: 24px;
+
+      box-shadow:
+
+        0 0 18px
+
+        rgba(88,101,242,.15);
+
+    }
+
+
+    /* Discord Info */
+
+    .discord-info {
+
+      flex: 1;
+
+      min-width: 0;
+
+    }
+
+
+    .discord-title {
+
+      color: #fff;
+
+      font-size: 13px;
+
+      font-weight: 800;
+
+      letter-spacing: 1px;
+
+    }
+
+
+    .discord-text {
+
+      margin-top: 5px;
+
+      color: #777;
+
+      font-family: Arial, sans-serif;
+
+      font-size: 11px;
+
+      line-height: 1.4;
+
+    }
+
+
+    /* Discord Button */
+
+    .discord-btn {
+
+      flex-shrink: 0;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 7px;
+
+      padding:
+
+        11px 15px;
+
+      border-radius: 9px;
+
+      background: #5865F2;
+
+      color: #fff;
+
+      text-decoration: none;
+
+      font-family: Arial, sans-serif;
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      transition: .3s ease;
+
+      box-shadow:
+
+        0 0 15px
+
+        rgba(88,101,242,.2);
+
+    }
+
+
+    .discord-btn:hover {
+
+      background: #4752C4;
+
+      transform:
+
+        scale(1.05);
+
+      box-shadow:
+
+        0 0 25px
+
+        rgba(88,101,242,.45);
+
+    }
+
+
+    .discord-btn i {
+
+      font-size: 15px;
+
+    }
+
 
     /* =========================
        HANDLE
-    ========================= */
+    ========================== */
 
     .handle {
+
       margin-top: 25px;
 
       font-family: Arial, sans-serif;
@@ -685,29 +1383,39 @@
       color: #666;
 
       font-size: 13px;
+
     }
 
+
     .handle span {
+
       color: #ff315e;
 
       font-weight: bold;
 
       text-shadow:
+
         0 0 10px
+
         rgba(255,0,70,.4);
+
     }
+
 
     /* =========================
        FOOTER
-    ========================= */
+    ========================== */
 
     .footer {
+
       margin-top: 25px;
 
       padding-top: 20px;
 
       border-top:
+
         1px solid
+
         rgba(255,255,255,.07);
 
       color: #444;
@@ -717,56 +1425,134 @@
       font-size: 11px;
 
       letter-spacing: 1px;
+
     }
+
 
     /* =========================
        MOBILE
-    ========================= */
+    ========================== */
 
     @media (max-width: 500px) {
 
       .card {
+
         padding:
+
           35px 18px 25px;
+
       }
+
 
       .logo-box {
+
         width: 125px;
+
         height: 125px;
+
       }
+
 
       .socials {
+
         grid-template-columns: 1fr;
+
       }
+
 
       .name {
+
         letter-spacing: 2px;
+
       }
 
+
       .tag {
+
         font-size: 9px;
+
         letter-spacing: 3px;
+
+      }
+
+
+      .discord-section {
+
+        padding: 13px;
+
+      }
+
+
+      .discord-icon {
+
+        width: 42px;
+
+        height: 42px;
+
+        min-width: 42px;
+
+        font-size: 20px;
+
+      }
+
+
+      .discord-text {
+
+        font-size: 9px;
+
+      }
+
+
+      .discord-btn {
+
+        padding:
+
+          10px 11px;
+
+        font-size: 9px;
+
+      }
+
+
+      .discord-btn i {
+
+        font-size: 13px;
+
       }
 
     }
 
+
     /* =========================
        REDUCED MOTION
-    ========================= */
+    ========================== */
 
     @media (prefers-reduced-motion: reduce) {
 
       *,
+
       *::before,
+
       *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
+
+        animation-duration:
+
+          0.01ms !important;
+
+        animation-iteration-count:
+
+          1 !important;
+
+        scroll-behavior:
+
+          auto !important;
+
       }
 
     }
 
   </style>
+
 </head>
 
 
@@ -775,7 +1561,7 @@
 
   <!-- =========================
        BACKGROUND MUSIC
-  ========================= -->
+  ========================== -->
 
   <audio
     id="bgMusic"
@@ -787,9 +1573,10 @@
 
   <!-- =========================
        ANIMATED BACKGROUND
-  ========================= -->
+  ========================== -->
 
   <div class="bg-effects">
+
 
     <div class="orb orb-1"></div>
 
@@ -797,23 +1584,18 @@
 
     <div class="orb orb-3"></div>
 
+
     <div class="light-beam beam-1"></div>
 
     <div class="light-beam beam-2"></div>
+
 
     <div class="particles">
 
       <span></span>
       <span></span>
       <span></span>
-      <span></span>
 
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-
-      <span></span>
       <span></span>
       <span></span>
       <span></span>
@@ -821,6 +1603,15 @@
       <span></span>
       <span></span>
       <span></span>
+
+      <span></span>
+      <span></span>
+      <span></span>
+
+      <span></span>
+      <span></span>
+      <span></span>
+
       <span></span>
 
     </div>
@@ -830,9 +1621,12 @@
 
   <!-- =========================
        MAIN CARD
-  ========================= -->
+  ========================== -->
 
   <main class="card">
+
+
+    <!-- Top Line -->
 
     <div class="top-line"></div>
 
@@ -851,12 +1645,16 @@
     <!-- Name -->
 
     <h1 class="name">
+
       PRIME BRONGE
+
     </h1>
 
 
     <div class="tag">
+
       GAMING • CONTENT • COMMUNITY
+
     </div>
 
 
@@ -864,7 +1662,11 @@
 
     <p class="bio">
 
-      Welcome to <b>PRIME BRONGE</b> ⚡<br>
+      Welcome to
+
+      <b>PRIME BRONGE</b> ⚡
+
+      <br>
 
       Gaming, highlights, insane moments
       and more.
@@ -875,12 +1677,18 @@
     </p>
 
 
+    <!-- Social Title -->
+
     <div class="social-title">
+
       FOLLOW ME ON
+
     </div>
 
 
-    <!-- Social Buttons -->
+    <!-- =========================
+         SOCIAL BUTTONS
+    ========================== -->
 
     <div class="socials">
 
@@ -888,15 +1696,23 @@
       <!-- YouTube -->
 
       <a
+
         class="social-btn youtube"
+
         href="https://www.youtube.com/@primebronge"
+
         target="_blank"
-        rel="noopener noreferrer">
+
+        rel="noopener noreferrer"
+
+      >
 
         <i class="fa-brands fa-youtube"></i>
 
         <span>
+
           YouTube
+
         </span>
 
       </a>
@@ -905,15 +1721,23 @@
       <!-- TikTok -->
 
       <a
+
         class="social-btn tiktok"
+
         href="https://www.tiktok.com/@primebronge"
+
         target="_blank"
-        rel="noopener noreferrer">
+
+        rel="noopener noreferrer"
+
+      >
 
         <i class="fa-brands fa-tiktok"></i>
 
         <span>
+
           TikTok
+
         </span>
 
       </a>
@@ -922,15 +1746,23 @@
       <!-- Instagram -->
 
       <a
+
         class="social-btn instagram"
+
         href="https://www.instagram.com/primebronge/"
+
         target="_blank"
-        rel="noopener noreferrer">
+
+        rel="noopener noreferrer"
+
+      >
 
         <i class="fa-brands fa-instagram"></i>
 
         <span>
+
           Instagram
+
         </span>
 
       </a>
@@ -939,15 +1771,23 @@
       <!-- Facebook -->
 
       <a
+
         class="social-btn facebook"
+
         href="https://www.facebook.com/primebronge0"
+
         target="_blank"
-        rel="noopener noreferrer">
+
+        rel="noopener noreferrer"
+
+      >
 
         <i class="fa-brands fa-facebook"></i>
 
         <span>
+
           Facebook
+
         </span>
 
       </a>
@@ -956,20 +1796,81 @@
     </div>
 
 
+    <!-- =========================
+         DISCORD SERVER
+    ========================== -->
+
+    <div class="discord-section">
+
+
+      <div class="discord-icon">
+
+        <i class="fa-brands fa-discord"></i>
+
+      </div>
+
+
+      <div class="discord-info">
+
+        <div class="discord-title">
+
+          JOIN OUR DISCORD
+
+        </div>
+
+
+        <div class="discord-text">
+
+          Connect with the PRIME BRONGE community
+
+        </div>
+
+      </div>
+
+
+      <a
+
+        class="discord-btn"
+
+        href="https://discord.gg/avWFxBZesr"
+
+        target="_blank"
+
+        rel="noopener noreferrer"
+
+      >
+
+        <i class="fa-brands fa-discord"></i>
+
+        JOIN SERVER
+
+      </a>
+
+
+    </div>
+
+
+    <!-- Handle -->
+
     <div class="handle">
 
       All platforms →
 
       <span>
+
         @primebronge
+
       </span>
 
     </div>
 
 
+    <!-- Footer -->
+
     <div class="footer">
 
       © 2026 PRIME BRONGE
+
       • ALL RIGHTS RESERVED
 
     </div>
@@ -980,45 +1881,68 @@
 
   <!-- =========================
        MUSIC SCRIPT
-  ========================= -->
+  ========================== -->
 
   <script>
 
-    const music = document.getElementById("bgMusic");
+    const music =
+      document.getElementById("bgMusic");
 
-    // Music volume
+
+    /*
+      Music volume
+      0.35 = 35%
+    */
+
     music.volume = 0.35;
 
-    // Try autoplay when page loads
-    window.addEventListener("load", () => {
 
-      music.play().catch(() => {
+    /*
+      Try to start music
+      automatically on page load.
+    */
 
-        console.log(
-          "Autoplay blocked by browser. Waiting for user interaction..."
-        );
+    window.addEventListener(
+      "load",
+      () => {
 
-      });
+        music.play().catch(() => {
 
-    });
+          console.log(
+            "Autoplay blocked. Waiting for user interaction."
+          );
+
+        });
+
+      }
+    );
 
 
-    // If browser blocks autoplay,
-    // start music on first interaction.
+    /*
+      Some browsers block
+      unmuted autoplay.
+
+      If blocked, music starts
+      on the user's first click,
+      touch or keyboard input.
+    */
 
     const startMusic = () => {
 
       music.play().catch(() => {});
+
 
       document.removeEventListener(
         "click",
         startMusic
       );
 
+
       document.removeEventListener(
         "touchstart",
         startMusic
       );
+
 
       document.removeEventListener(
         "keydown",
@@ -1033,10 +1957,12 @@
       startMusic
     );
 
+
     document.addEventListener(
       "touchstart",
       startMusic
     );
+
 
     document.addEventListener(
       "keydown",
@@ -1047,4 +1973,5 @@
 
 
 </body>
+
 </html>
