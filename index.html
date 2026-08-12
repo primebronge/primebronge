@@ -17,10 +17,6 @@
 
   <style>
 
-    /* =========================
-       RESET
-    ========================= */
-
     * {
       margin: 0;
       padding: 0;
@@ -43,7 +39,6 @@
       position: relative;
     }
 
-
     /* =========================
        ANIMATED BACKGROUND
     ========================= */
@@ -62,9 +57,6 @@
           transparent 35%
         );
     }
-
-
-    /* Background Grid */
 
     .bg-effects::before {
       content: "";
@@ -93,7 +85,6 @@
       );
     }
 
-
     /* Glowing Orbs */
 
     .orb {
@@ -101,17 +92,13 @@
       border-radius: 50%;
       filter: blur(75px);
       opacity: .55;
-
-      animation:
-        floatOrb 9s ease-in-out infinite alternate;
+      animation: floatOrb 9s ease-in-out infinite alternate;
     }
 
     .orb-1 {
       width: 300px;
       height: 300px;
-
       background: rgba(255, 0, 70, .23);
-
       top: -100px;
       left: -100px;
     }
@@ -119,65 +106,45 @@
     .orb-2 {
       width: 380px;
       height: 380px;
-
       background: rgba(110, 0, 255, .16);
-
       right: -140px;
       top: 25%;
-
       animation-delay: -3s;
     }
 
     .orb-3 {
       width: 280px;
       height: 280px;
-
       background: rgba(255, 20, 80, .18);
-
       bottom: -100px;
       left: 35%;
-
       animation-delay: -5s;
     }
-
 
     @keyframes floatOrb {
 
       0% {
-        transform:
-          translate(0, 0)
-          scale(1);
+        transform: translate(0, 0) scale(1);
       }
 
       50% {
-        transform:
-          translate(80px, 40px)
-          scale(1.15);
+        transform: translate(80px, 40px) scale(1.15);
       }
 
       100% {
-        transform:
-          translate(-40px, -60px)
-          scale(.9);
+        transform: translate(-40px, -60px) scale(.9);
       }
 
     }
 
-
-    /* =========================
-       MOVING LIGHT BEAMS
-    ========================= */
+    /* Moving Light Beams */
 
     .light-beam {
       position: absolute;
-
       width: 2px;
       height: 140%;
-
       top: -20%;
-
       opacity: .25;
-
       filter: blur(2px);
 
       background:
@@ -189,8 +156,7 @@
 
       transform: rotate(25deg);
 
-      animation:
-        beamMove 8s linear infinite;
+      animation: beamMove 8s linear infinite;
     }
 
     .beam-1 {
@@ -199,12 +165,9 @@
 
     .beam-2 {
       right: 20%;
-
       animation-delay: -4s;
-
       opacity: .14;
     }
-
 
     @keyframes beamMove {
 
@@ -222,14 +185,10 @@
 
     }
 
-
-    /* =========================
-       FLOATING PARTICLES
-    ========================= */
+    /* Floating Particles */
 
     .particles span {
       position: absolute;
-
       width: 3px;
       height: 3px;
 
@@ -241,10 +200,8 @@
         0 0 10px #ff174f,
         0 0 20px rgba(255,0,70,.5);
 
-      animation:
-        particleFloat linear infinite;
+      animation: particleFloat linear infinite;
     }
-
 
     .particles span:nth-child(1) {
       left: 5%;
@@ -342,14 +299,12 @@
       animation-duration: 6s;
     }
 
-
     @keyframes particleFloat {
 
       0% {
         transform:
           translateY(50px)
           scale(.5);
-
         opacity: 0;
       }
 
@@ -365,23 +320,19 @@
         transform:
           translateY(-170px)
           scale(1);
-
         opacity: 0;
       }
 
     }
-
 
     /* =========================
        MAIN CARD
     ========================= */
 
     .card {
-
       width: min(92%, 600px);
 
-      padding:
-        45px 30px 35px;
+      padding: 45px 30px 35px;
 
       margin: 30px 0;
 
@@ -400,18 +351,12 @@
       border-radius: 25px;
 
       backdrop-filter: blur(18px);
-
       -webkit-backdrop-filter: blur(18px);
 
       box-shadow:
-
         0 0 40px rgba(0,0,0,.85),
-
-        0 0 100px
-        rgba(255,0,70,.07),
-
-        inset 0 0 30px
-        rgba(255,255,255,.015);
+        0 0 100px rgba(255,0,70,.07),
+        inset 0 0 30px rgba(255,255,255,.015);
 
       position: relative;
 
@@ -420,11 +365,7 @@
       overflow: hidden;
     }
 
-
-    /* Card Glow */
-
     .card::before {
-
       content: "";
 
       position: absolute;
@@ -451,7 +392,6 @@
         cardGlow 3s ease-in-out infinite;
     }
 
-
     @keyframes cardGlow {
 
       0%,100% {
@@ -464,18 +404,15 @@
 
     }
 
-
     /* =========================
        TOP LINE
     ========================= */
 
     .top-line {
-
       width: 100px;
       height: 3px;
 
-      margin:
-        0 auto 30px;
+      margin: 0 auto 30px;
 
       background:
         linear-gradient(
@@ -489,13 +426,11 @@
         0 0 15px #ff174f;
     }
 
-
     /* =========================
        LOGO
     ========================= */
 
     .logo-box {
-
       width: 145px;
       height: 145px;
 
@@ -514,21 +449,14 @@
         );
 
       box-shadow:
-
-        0 0 25px
-        rgba(255,0,70,.5),
-
-        0 0 70px
-        rgba(255,0,70,.15);
+        0 0 25px rgba(255,0,70,.5),
+        0 0 70px rgba(255,0,70,.15);
 
       animation:
-        logoPulse 2.5s
-        infinite ease-in-out;
+        logoPulse 2.5s infinite ease-in-out;
     }
 
-
     .logo-box img {
-
       width: 100%;
       height: 100%;
 
@@ -541,32 +469,25 @@
       display: block;
     }
 
-
     @keyframes logoPulse {
 
       0%,100% {
-
         box-shadow:
-          0 0 25px
-          rgba(255,0,70,.5);
+          0 0 25px rgba(255,0,70,.5);
       }
 
       50% {
-
         box-shadow:
-          0 0 45px
-          rgba(255,0,70,.85);
+          0 0 45px rgba(255,0,70,.85);
       }
 
     }
-
 
     /* =========================
        NAME
     ========================= */
 
     .name {
-
       margin-top: 25px;
 
       font-size:
@@ -579,17 +500,11 @@
       color: #fff;
 
       text-shadow:
-
-        0 0 10px
-        rgba(255,255,255,.3),
-
-        0 0 25px
-        rgba(255,0,70,.5);
+        0 0 10px rgba(255,255,255,.3),
+        0 0 25px rgba(255,0,70,.5);
     }
 
-
     .tag {
-
       margin-top: 8px;
 
       font-size: 12px;
@@ -601,17 +516,14 @@
       font-weight: 700;
     }
 
-
     /* =========================
        BIO
     ========================= */
 
     .bio {
-
       max-width: 470px;
 
-      margin:
-        25px auto 30px;
+      margin: 25px auto 30px;
 
       color: #aaa;
 
@@ -626,13 +538,11 @@
       color: #fff;
     }
 
-
     /* =========================
        SOCIAL TITLE
     ========================= */
 
     .social-title {
-
       font-size: 12px;
 
       letter-spacing: 4px;
@@ -642,13 +552,11 @@
       margin-bottom: 15px;
     }
 
-
     /* =========================
        SOCIAL BUTTONS
     ========================= */
 
     .socials {
-
       display: grid;
 
       grid-template-columns:
@@ -657,9 +565,7 @@
       gap: 12px;
     }
 
-
     .social-btn {
-
       position: relative;
 
       height: 58px;
@@ -687,19 +593,14 @@
 
       overflow: hidden;
 
-      transition:
-        .3s ease;
+      transition: .3s ease;
 
       font-size: 13px;
 
       font-weight: 700;
     }
 
-
-    /* Button Shine */
-
     .social-btn::before {
-
       content: "";
 
       position: absolute;
@@ -720,16 +621,12 @@
       transition: .5s;
     }
 
-
     .social-btn:hover::before {
-
       transform:
         translateX(100%);
     }
 
-
     .social-btn:hover {
-
       transform:
         translateY(-5px);
 
@@ -737,7 +634,6 @@
         #ff174f;
 
       box-shadow:
-
         0 8px 25px
         rgba(255,0,70,.20),
 
@@ -745,17 +641,13 @@
         rgba(255,0,70,.05);
     }
 
-
     .social-btn i {
-
       font-size: 21px;
 
       transition: .3s;
     }
 
-
     .social-btn:hover i {
-
       transform:
         scale(1.2);
 
@@ -764,9 +656,6 @@
           0 0 8px currentColor
         );
     }
-
-
-    /* Platform Colors */
 
     .youtube i {
       color: #ff0033;
@@ -784,13 +673,11 @@
       color: #1877f2;
     }
 
-
     /* =========================
        HANDLE
     ========================= */
 
     .handle {
-
       margin-top: 25px;
 
       font-family: Arial, sans-serif;
@@ -800,9 +687,7 @@
       font-size: 13px;
     }
 
-
     .handle span {
-
       color: #ff315e;
 
       font-weight: bold;
@@ -812,13 +697,11 @@
         rgba(255,0,70,.4);
     }
 
-
     /* =========================
        FOOTER
     ========================= */
 
     .footer {
-
       margin-top: 25px;
 
       padding-top: 20px;
@@ -836,7 +719,6 @@
       letter-spacing: 1px;
     }
 
-
     /* =========================
        MOBILE
     ========================= */
@@ -844,40 +726,29 @@
     @media (max-width: 500px) {
 
       .card {
-
         padding:
           35px 18px 25px;
       }
 
-
       .logo-box {
-
         width: 125px;
         height: 125px;
       }
 
-
       .socials {
-
         grid-template-columns: 1fr;
       }
 
-
       .name {
-
         letter-spacing: 2px;
       }
 
-
       .tag {
-
         font-size: 9px;
-
         letter-spacing: 3px;
       }
 
     }
-
 
     /* =========================
        REDUCED MOTION
@@ -888,11 +759,8 @@
       *,
       *::before,
       *::after {
-
         animation-duration: 0.01ms !important;
-
         animation-iteration-count: 1 !important;
-
         scroll-behavior: auto !important;
       }
 
@@ -903,6 +771,18 @@
 
 
 <body>
+
+
+  <!-- =========================
+       BACKGROUND MUSIC
+  ========================= -->
+
+  <audio
+    id="bgMusic"
+    src="theme.mp3"
+    loop
+    preload="auto">
+  </audio>
 
 
   <!-- =========================
@@ -917,11 +797,9 @@
 
     <div class="orb orb-3"></div>
 
-
     <div class="light-beam beam-1"></div>
 
     <div class="light-beam beam-2"></div>
-
 
     <div class="particles">
 
@@ -950,15 +828,11 @@
   </div>
 
 
-
   <!-- =========================
        MAIN CARD
   ========================= -->
 
   <main class="card">
-
-
-    <!-- Top Glow -->
 
     <div class="top-line"></div>
 
@@ -969,8 +843,7 @@
 
       <img
         src="logo.png"
-        alt="PRIME BRONGE Logo"
-      >
+        alt="PRIME BRONGE Logo">
 
     </div>
 
@@ -1002,16 +875,12 @@
     </p>
 
 
-    <!-- Social Title -->
-
     <div class="social-title">
       FOLLOW ME ON
     </div>
 
 
-    <!-- =========================
-         SOCIAL BUTTONS
-    ========================= -->
+    <!-- Social Buttons -->
 
     <div class="socials">
 
@@ -1022,8 +891,7 @@
         class="social-btn youtube"
         href="https://www.youtube.com/@primebronge"
         target="_blank"
-        rel="noopener noreferrer"
-      >
+        rel="noopener noreferrer">
 
         <i class="fa-brands fa-youtube"></i>
 
@@ -1040,8 +908,7 @@
         class="social-btn tiktok"
         href="https://www.tiktok.com/@primebronge"
         target="_blank"
-        rel="noopener noreferrer"
-      >
+        rel="noopener noreferrer">
 
         <i class="fa-brands fa-tiktok"></i>
 
@@ -1058,8 +925,7 @@
         class="social-btn instagram"
         href="https://www.instagram.com/primebronge/"
         target="_blank"
-        rel="noopener noreferrer"
-      >
+        rel="noopener noreferrer">
 
         <i class="fa-brands fa-instagram"></i>
 
@@ -1076,8 +942,7 @@
         class="social-btn facebook"
         href="https://www.facebook.com/primebronge0"
         target="_blank"
-        rel="noopener noreferrer"
-      >
+        rel="noopener noreferrer">
 
         <i class="fa-brands fa-facebook"></i>
 
@@ -1091,8 +956,6 @@
     </div>
 
 
-    <!-- Handle -->
-
     <div class="handle">
 
       All platforms →
@@ -1104,8 +967,6 @@
     </div>
 
 
-    <!-- Footer -->
-
     <div class="footer">
 
       © 2026 PRIME BRONGE
@@ -1115,6 +976,74 @@
 
 
   </main>
+
+
+  <!-- =========================
+       MUSIC SCRIPT
+  ========================= -->
+
+  <script>
+
+    const music = document.getElementById("bgMusic");
+
+    // Music volume
+    music.volume = 0.35;
+
+    // Try autoplay when page loads
+    window.addEventListener("load", () => {
+
+      music.play().catch(() => {
+
+        console.log(
+          "Autoplay blocked by browser. Waiting for user interaction..."
+        );
+
+      });
+
+    });
+
+
+    // If browser blocks autoplay,
+    // start music on first interaction.
+
+    const startMusic = () => {
+
+      music.play().catch(() => {});
+
+      document.removeEventListener(
+        "click",
+        startMusic
+      );
+
+      document.removeEventListener(
+        "touchstart",
+        startMusic
+      );
+
+      document.removeEventListener(
+        "keydown",
+        startMusic
+      );
+
+    };
+
+
+    document.addEventListener(
+      "click",
+      startMusic
+    );
+
+    document.addEventListener(
+      "touchstart",
+      startMusic
+    );
+
+    document.addEventListener(
+      "keydown",
+      startMusic
+    );
+
+  </script>
 
 
 </body>
