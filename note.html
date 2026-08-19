@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Secure Firebase Notepad</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #0b1120;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+/* ================= LOGIN ================= */
+
+#loginPage {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.loginBox {
+    width: 100%;
+    max-width: 400px;
+    background: #111827;
+    border: 1px solid #263244;
+    border-radius: 18px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+
+.logo {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.loginBox h2 {
+    margin: 5px 0 8px;
+}
+
+.loginBox p {
+    color: #94a3b8;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+#password {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    color: white;
+    outline: none;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+#password:focus {
+    border-color: #6366f1;
+}
+
+.loginBtn {
+    width: 100%;
+    padding: 14px;
+    border: 0;
+    border-radius: 10px;
+    background: #6366f1;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.loginBtn:hover {
+    background: #4f46e5;
+}
+
+#loginError {
+    color: #ef4444;
+    font-size: 14px;
+    margin-top: 15px;
+    display: none;
+}
+
+
+/* ================= NOTEPAD ================= */
+
+#notepadPage {
+    display: none;
+    height: 100vh;
+}
+
+.topbar {
+    height: 60px;
+    background: #111827;
+    border-bottom: 1px solid #263244;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+
+.title {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#status {
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+.saved {
+    color: #22c55e !important;
+}
+
+.saving {
+    color: #facc15 !important;
+}
+
+.error {
+    color: #ef4444 !important;
+}
+
+.logout {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.logout:hover {
+    background: #b91c1c;
+}
+
+textarea {
+    display: block;
+    width: 100%;
+    height: calc(100vh - 60px);
+    resize: none;
+    outline: none;
+    border: none;
+    background: #0b1120;
+    color: #e5e7eb;
+    padding: 20px;
+    font-size: 17px;
+    line-height: 1.6;
+    font-family: Consolas, monospace;
+}
+
+textarea::placeholder {
+    color: #475569;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px) {
+
+    .title {
+        font-size: 16px;
+    }
+
+    #status {
+        font-size: 11px;
+    }
+
+    .logout {
+        padding: 7px 9px;
+        font-size: 12px;
+    }
+
+    textarea {
+        font-size: 16px;
+        padding: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- ================================================= -->
+<!-- LOGIN PAGE -->
+<!-- ================================================= -->
+
+<div id="loginPage">
+
+    <div class="loginBox">
+
+        <div class="logo">🔐</div>
+
+        <h2>Private Notepad</h2>
+
+        <p>
+            Enter your password to access the notepad
+        </p>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter password"
+            autocomplete="off"
+        >
+
+        <button class="loginBtn" onclick="login()">
+            Unlock
+        </button>
+
+        <div id="loginError">
+            ❌ Wrong password
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- NOTEPAD PAGE -->
+<!-- ================================================= -->
+
+<div id="notepadPage">
+
+    <div class="topbar">
+
+        <div class="title">
+            📝 My Firebase Notepad
+        </div>
+
+        <div class="right">
+
+            <span id="status">
+                Connecting...
+            </span>
+
+            <button class="logout" onclick="logout()">
+                Lock
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <textarea
+        id="notepad"
+        placeholder="Write anything here..."
+        spellcheck="false"
+    ></textarea>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- FIREBASE -->
+<!-- ================================================= -->
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    set,
+    onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+// =====================================================
+// FIREBASE CONFIG
+// =====================================================
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyDJ6pIvSxk8S6MAGecty6WT4vnjeW9sapk",
+
+    authDomain:
+        "sck-gaming-ff.firebaseapp.com",
+
+    databaseURL:
+        "https://sck-gaming-ff-default-rtdb.firebaseio.com",
+
+    projectId:
+        "sck-gaming-ff",
+
+    storageBucket:
+        "sck-gaming-ff.appspot.com",
+
+    messagingSenderId:
+        "13025880063",
+
+    appId:
+        "1:13025880063:web:2a04085de262ef973fe9ca",
+
+    measurementId:
+        "G-HTVYLDLC7D"
+};
+
+
+// =====================================================
+// INITIALIZE FIREBASE
+// =====================================================
+
+const app = initializeApp(firebaseConfig);
+
+const db = getDatabase(app);
+
+
+// =====================================================
+// DATABASE LOCATION
+// =====================================================
+
+const noteRef =
+    ref(db, "privateNotepad/content");
+
+
+// =====================================================
+// ELEMENTS
+// =====================================================
+
+const textarea =
+    document.getElementById("notepad");
+
+const status =
+    document.getElementById("status");
+
+
+// =====================================================
+// LOAD FIREBASE DATA
+// =====================================================
+
+onValue(noteRef, (snapshot) => {
+
+    if (snapshot.exists()) {
+
+        textarea.value = snapshot.val();
+
+    } else {
+
+        textarea.value = "";
+
+    }
+
+    status.innerText = "✓ Saved";
+
+    status.className = "saved";
+
+}, (error) => {
+
+    console.error(error);
+
+    status.innerText =
+        "Firebase Error";
+
+    status.className = "error";
+
+});
+
+
+// =====================================================
+// AUTO SAVE
+// =====================================================
+
+let saveTimer = null;
+
+textarea.addEventListener("input", () => {
+
+    status.innerText = "Saving...";
+
+    status.className = "saving";
+
+
+    clearTimeout(saveTimer);
+
+
+    saveTimer = setTimeout(async () => {
+
+        try {
+
+            await set(
+                noteRef,
+                textarea.value
+            );
+
+            status.innerText =
+                "✓ Saved";
+
+            status.className =
+                "saved";
+
+        }
+
+        catch(error) {
+
+            console.error(error);
+
+            status.innerText =
+                "❌ Save Failed";
+
+            status.className =
+                "error";
+
+        }
+
+    }, 500);
+
+});
+
+
+// =====================================================
+// LOGIN SYSTEM
+// =====================================================
+
+window.login = async function() {
+
+    const password =
+        document.getElementById("password").value;
+
+
+    /*
+    ====================================================
+    PASSWORD CHANGE
+    ====================================================
+
+    নিচের password পরিবর্তন করো।
+
+    Example:
+
+    const correctPassword = "123456";
+
+    ====================================================
+    */
+
+    const correctPassword =
+        "2311";
+
+
+    if (password === correctPassword) {
+
+        document.getElementById(
+            "loginPage"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "notepadPage"
+        ).style.display = "block";
+
+
+        document.getElementById(
+            "loginError"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "password"
+        ).value = "";
+
+    }
+
+    else {
+
+        document.getElementById(
+            "loginError"
+        ).style.display = "block";
+
+    }
+
+};
+
+
+// =====================================================
+// ENTER KEY LOGIN
+// =====================================================
+
+document.getElementById(
+    "password"
+).addEventListener("keydown", (event) => {
+
+    if (event.key === "Enter") {
+
+        window.login();
+
+    }
+
+});
+
+
+// =====================================================
+// LOGOUT / LOCK
+// =====================================================
+
+window.logout = function() {
+
+    document.getElementById(
+        "notepadPage"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "loginPage"
+    ).style.display = "flex";
+
+
+    document.getElementById(
+        "password"
+    ).value = "";
+
+};
+
+</script>
+
+</body>
+</html>
