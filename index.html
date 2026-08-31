@@ -389,178 +389,99 @@
 
 
     .particles span:nth-child(1) {
-
       left: 5%;
-
       top: 80%;
-
       animation-duration: 7s;
-
     }
-
 
     .particles span:nth-child(2) {
-
       left: 12%;
-
       top: 30%;
-
       animation-duration: 9s;
-
     }
-
 
     .particles span:nth-child(3) {
-
       left: 20%;
-
       top: 65%;
-
       animation-duration: 6s;
-
     }
-
 
     .particles span:nth-child(4) {
-
       left: 28%;
-
       top: 15%;
-
       animation-duration: 8s;
-
     }
-
 
     .particles span:nth-child(5) {
-
       left: 35%;
-
       top: 85%;
-
       animation-duration: 10s;
-
     }
-
 
     .particles span:nth-child(6) {
-
       left: 43%;
-
       top: 40%;
-
       animation-duration: 7s;
-
     }
-
 
     .particles span:nth-child(7) {
-
       left: 50%;
-
       top: 75%;
-
       animation-duration: 9s;
-
     }
-
 
     .particles span:nth-child(8) {
-
       left: 58%;
-
       top: 20%;
-
       animation-duration: 6s;
-
     }
-
 
     .particles span:nth-child(9) {
-
       left: 65%;
-
       top: 60%;
-
       animation-duration: 8s;
-
     }
-
 
     .particles span:nth-child(10) {
-
       left: 72%;
-
       top: 10%;
-
       animation-duration: 7s;
-
     }
-
 
     .particles span:nth-child(11) {
-
       left: 78%;
-
       top: 80%;
-
       animation-duration: 10s;
-
     }
-
 
     .particles span:nth-child(12) {
-
       left: 84%;
-
       top: 35%;
-
       animation-duration: 6s;
-
     }
-
 
     .particles span:nth-child(13) {
-
       left: 90%;
-
       top: 70%;
-
       animation-duration: 9s;
-
     }
-
 
     .particles span:nth-child(14) {
-
       left: 95%;
-
       top: 20%;
-
       animation-duration: 7s;
-
     }
-
 
     .particles span:nth-child(15) {
-
       left: 40%;
-
       top: 5%;
-
       animation-duration: 8s;
-
     }
 
-
     .particles span:nth-child(16) {
-
       left: 60%;
-
       top: 90%;
-
       animation-duration: 6s;
-
     }
 
 
@@ -1144,13 +1065,6 @@
     }
 
 
-    .facebook i {
-
-      color: #1877f2;
-
-    }
-
-
     /* =========================
        DISCORD SECTION
     ========================== */
@@ -1560,18 +1474,6 @@
 
 
   <!-- =========================
-       BACKGROUND MUSIC
-  ========================== -->
-
-  <audio
-    id="bgMusic"
-    src="theme.mp3"
-    loop
-    preload="auto">
-  </audio>
-
-
-  <!-- =========================
        ANIMATED BACKGROUND
   ========================== -->
 
@@ -1768,31 +1670,6 @@
       </a>
 
 
-      <!-- Facebook -->
-
-      <a
-
-        class="social-btn facebook"
-
-        href="https://www.facebook.com/primebronge0"
-
-        target="_blank"
-
-        rel="noopener noreferrer"
-
-      >
-
-        <i class="fa-brands fa-facebook"></i>
-
-        <span>
-
-          Facebook
-
-        </span>
-
-      </a>
-
-
     </div>
 
 
@@ -1877,99 +1754,6 @@
 
 
   </main>
-
-
-  <!-- =========================
-       MUSIC SCRIPT
-  ========================== -->
-
-  <script>
-
-    const music =
-      document.getElementById("bgMusic");
-
-
-    /*
-      Music volume
-      0.35 = 35%
-    */
-
-    music.volume = 0.35;
-
-
-    /*
-      Try to start music
-      automatically on page load.
-    */
-
-    window.addEventListener(
-      "load",
-      () => {
-
-        music.play().catch(() => {
-
-          console.log(
-            "Autoplay blocked. Waiting for user interaction."
-          );
-
-        });
-
-      }
-    );
-
-
-    /*
-      Some browsers block
-      unmuted autoplay.
-
-      If blocked, music starts
-      on the user's first click,
-      touch or keyboard input.
-    */
-
-    const startMusic = () => {
-
-      music.play().catch(() => {});
-
-
-      document.removeEventListener(
-        "click",
-        startMusic
-      );
-
-
-      document.removeEventListener(
-        "touchstart",
-        startMusic
-      );
-
-
-      document.removeEventListener(
-        "keydown",
-        startMusic
-      );
-
-    };
-
-
-    document.addEventListener(
-      "click",
-      startMusic
-    );
-
-
-    document.addEventListener(
-      "touchstart",
-      startMusic
-    );
-
-
-    document.addEventListener(
-      "keydown",
-      startMusic
-    );
-
-  </script>
 
 
 </body>
