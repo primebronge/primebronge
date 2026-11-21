@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ludo Admin</title>
+<style>
+:root{--ink:#17203d;--mut:#667091;--bg:#e8ecf5;--pn:#fff;--ln:#d7dcea;--ac:#4157e6;--r:12px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 "Segoe UI","Noto Sans Bengali",system-ui,sans-serif}
+header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:var(--ink);color:#fff;position:sticky;top:0;z-index:50}
+.logo{display:grid;grid-template:1fr 1fr/1fr 1fr;gap:2px;width:24px;height:24px}.logo i{border-radius:4px}
+header b{font-size:18px;letter-spacing:.2px}header .hint{color:#aab3d8}
+.chip{font-size:12px;padding:2px 10px;border-radius:99px;background:#e8eaf3;color:var(--ink);white-space:nowrap}
+.chip.ok{background:#c9f2d6;color:#0c5a28}.chip.no{background:#ffd5d5;color:#8a1010}.chip.lv{background:#d6e4ff;color:#1b3c91}.chip.lo{background:#ffeccb;color:#7a4a00}.chip.wn{background:#f3d9ff;color:#5b1d7a}
+main{display:grid;grid-template-columns:260px minmax(320px,1fr) 350px;gap:14px;padding:14px;align-items:start;max-width:1500px;margin:0 auto}
+@media(max-width:1050px){main{grid-template-columns:1fr}}
+.box{background:var(--pn);border:1px solid var(--ln);border-radius:var(--r);padding:12px;box-shadow:0 1px 2px #17203d10}
+input[type=text],input[type=number]{width:100%;padding:8px 10px;border:1px solid var(--ln);border-radius:8px;font:inherit;background:#fff;color:var(--ink)}
+button{font:inherit;cursor:pointer;border:1px solid var(--ln);background:#fff;color:var(--ink);border-radius:8px;padding:7px 11px;transition:background .15s,border-color .15s}
+button:hover{border-color:var(--ac);background:#f4f6ff}button.on{background:var(--ac);border-color:var(--ac);color:#fff}button.dg{color:#b3261e;border-color:#efb8b4}button.dg:hover{background:#fff1f0}
+:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.row>*{flex:0 0 auto}.hint{color:var(--mut);font-size:12px}
+h4{margin:14px 0 6px;font-size:13px;color:var(--mut);font-weight:600}
+.m{padding:10px;border:1px solid var(--ln);border-radius:10px;margin-top:8px;cursor:pointer;background:#fff;transition:border-color .15s}
+.m:hover{border-color:#9aa8f5}.m.on{border-color:var(--ac);box-shadow:0 0 0 3px #d3d9ff;background:#f6f7ff}.m b{font-size:19px;letter-spacing:1px}.m small{display:block;color:var(--mut);margin-top:3px}
+.empty{color:var(--mut);padding:26px 8px;text-align:center}
+.turn{display:flex;align-items:center;gap:10px;max-width:620px;margin:0 auto 10px;padding:9px 14px;border-radius:10px;background:color-mix(in srgb,var(--gc) 14%,#fff);border:1.5px solid var(--gc)}
+.turn i{width:14px;height:14px;border-radius:50%;background:var(--gc);box-shadow:0 0 10px 3px var(--gc)}.turn b{font-size:15px}.turn span{color:var(--mut);margin-left:auto;font-size:12px}
+#bw{max-width:620px;margin:0 auto;padding:10px;border-radius:16px;background:var(--ink)}
+#bd{position:relative;width:100%;aspect-ratio:1;background:#fff;border-radius:6px;user-select:none;touch-action:manipulation;overflow:visible}
+.c{position:absolute;width:6.667%;height:6.667%;border:.5px solid #c9ced9;display:flex;align-items:center;justify-content:center;font-size:12px;color:#444;cursor:pointer}
+.c:hover{outline:2px solid var(--ac);z-index:3}
+.yd{position:absolute;width:40%;height:40%;border:.5px solid #333;cursor:pointer;transition:box-shadow .25s}
+.yd i{position:absolute;width:20%;height:20%;margin:-10% 0 0 -10%;border-radius:50%;background:#fff6;border:2px solid #fff9;pointer-events:none}
+.yd em{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-style:normal;font-weight:700;font-size:clamp(9px,1.9vw,13px);color:#fff;background:#0008;padding:2px 8px;border-radius:99px;pointer-events:none;max-width:90%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.yd.turn{z-index:4;box-shadow:0 0 0 4px #fff,0 0 22px 8px var(--gc),0 0 46px 14px var(--gc);animation:gl 1.4s ease-in-out infinite alternate}
+.yd.turn em{background:#fff;color:var(--ink)}
+@keyframes gl{to{box-shadow:0 0 0 4px #fff,0 0 30px 12px var(--gc),0 0 70px 22px var(--gc)}}
+#ct{position:absolute;left:40%;top:40%;width:20%;height:20%;pointer-events:none}
+.tk{position:absolute;width:6.667%;height:6.667%;padding:.5%;z-index:10;cursor:pointer;transition:left .25s,top .25s}
+.tk span{display:flex;width:100%;height:100%;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1.5px #222,0 2px 4px #0006;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#fff;text-shadow:0 0 2px #000}
+.tk.tn span{box-shadow:0 0 0 1.5px #222,0 0 10px 3px var(--gc)}
+.tk.s{z-index:20}.tk.s span{box-shadow:0 0 0 3px var(--ac),0 0 0 6px #fff,0 0 12px 5px #4157e6aa;animation:pl .9s infinite alternate}
+@keyframes pl{to{transform:scale(1.18)}}@media(prefers-reduced-motion:reduce){.tk.s span,.yd.turn{animation:none}.tk{transition:none}}
+.dice{display:flex;gap:8px;justify-content:center;margin:8px 0}
+.d{width:54px;height:54px;padding:6px;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);border-radius:12px;border:2px solid var(--ln);background:#fff}
+.d i{border-radius:50%;margin:1px}.d i.p{background:var(--ink)}.d.on{border-color:var(--ac);background:#e8ebff;box-shadow:0 0 0 3px #cdd5ff}.d.on i.p{background:var(--ac)}
+.tabs{display:flex;gap:4px;padding:3px;background:#eef0f7;border-radius:10px;margin-bottom:10px}.tabs button{flex:1;border:0;background:transparent}.tabs button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px #17203d25}
+.seg{display:flex}.seg button{border-radius:0;flex:1}.seg button:first-child{border-radius:8px 0 0 8px}.seg button:last-child{border-radius:0 8px 8px 0}
+.seat{border:1px solid var(--ln);border-radius:10px;padding:9px;margin-bottom:9px;border-left-width:8px;transition:box-shadow .2s}
+.seat.t{background:#f5f7ff;box-shadow:0 0 0 2px var(--gc),0 0 14px 2px var(--gc)}.seat .row{margin-top:6px}.seat .row:first-child{margin-top:0}.tp{font-size:12px;padding:4px 8px}
+details{margin-left:4px}summary{cursor:pointer;padding:3px 0;font-weight:600}.in{margin-left:12px;border-left:2px solid var(--ln);padding-left:9px}
+.lf{display:flex;align-items:center;gap:8px;margin:4px 0}.lf span{flex:0 0 38%;color:var(--mut);font-size:12px;word-break:break-all}.lf input[type=checkbox]{width:20px;height:20px}
+#ts{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 16px;border-radius:9px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:99}#ts.on{opacity:1}
+</style></head><body>
+<header><div class="logo"><i style="background:#e8202a"></i><i style="background:#12a83a"></i><i style="background:#1e9bf0"></i><i style="background:#ffd21f"></i></div><b>Ludo Admin</b><span id="cs" class="chip">Connecting…</span><span class="hint">Firebase path: rooms/</span></header>
+<main>
+<aside class="box"><input id="q" type="text" placeholder="Search match code"><div class="row seg" id="fl" style="margin-top:8px"></div><div id="ml"></div></aside>
+<section class="box" id="mid"><div class="empty">Select a match from the list</div></section>
+<section class="box" id="side"></section>
+</main><div id="ts"></div>
+<script src="js/firebase-config.js"></script>
+<script>
+const ADMIN_PIN=''; // set a PIN here to require it on load (empty = no PIN)
+const COL=['#e8202a','#12a83a','#ffd21f','#1e9bf0'],CN=['red','green','yellow','blue'],CB=['Red','Green','Yellow','Blue'];
+const SEG=[[6,1,0,1,5],[5,6,-1,0,6],[0,7,0,1,2],[1,8,1,0,5],[6,9,0,1,6],[7,14,1,0,2],[8,13,0,-1,5],[9,8,1,0,6],[14,7,0,-1,2],[13,6,-1,0,5],[8,5,0,-1,6],[7,0,-1,0,2]];
+const PATH=[];SEG.forEach(([r,c,dr,dc,k])=>{for(let i=0;i<k;i++)PATH.push([r+dr*i,c+dc*i])});
+const HB=[[7,1,0,1],[1,7,1,0],[7,13,0,-1],[13,7,-1,0]],YB=[[0,0],[0,9],[9,9],[9,0]];
+const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+const PI={},HC={};PATH.forEach(([r,c],i)=>PI[r+','+c]=i);HB.forEach(([r,c,dr,dc],i)=>{for(let k=0;k<5;k++)HC[(r+dr*k)+','+(c+dc*k)]=[i,51+k]});
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+function xy(col,p,t){if(p<0){const[a,b]=YB[col];return[a+(t<2?1.5:3.5),b+(t%2?3.5:1.5)]}if(p<=50)return PATH[(p+13*col)%52];const[r,c,dr,dc]=HB[col],k=p-51;return[r+dr*k,c+dc*k]}
+let db,R={},sel='',tk=null,tab='p',flt='all',pend=0,auto=0;
+const toast=m=>{const e=$('ts');e.textContent=m;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2400)};
+const fail=e=>toast('Error: '+(e&&e.message||e));
+const room=()=>R[sel],gs=()=>room()&&room().gameState;
+const arr=(x,n)=>Array.from({length:n||(x?Object.keys(x).length:0)},(_,i)=>x?x[i]:undefined);
+const fpOf=(g,cn,t)=>{const x=g.freePositions&&g.freePositions[cn]&&g.freePositions[cn][t];return x?String(x).split(',').map(Number):null};
+const seats=g=>arr(g.seatColors).map((cn,i)=>({i,cn,col:CN.indexOf(cn),name:(g.playerNames&&g.playerNames[i])||CB[CN.indexOf(cn)],pos:arr(g.tokenPositions&&g.tokenPositions[cn],4),fp:[0,1,2,3].map(t=>fpOf(g,cn,t))}));
+const upd=o=>db.ref('rooms/'+sel).update(o).catch(fail),set=(p,v)=>db.ref('rooms/'+sel+'/'+p).set(v).catch(fail);
+
+// ===== match list =====
+const mstat=r=>r.gameState&&r.gameState.winnerSeat>=0?['wn','Finished']:r.matchStarted?['ok','Live']:['lv','Lobby'];
+function renderList(){
+ $('fl').innerHTML=[['all','All'],['live','Live'],['lobby','Lobby']].map(([k,l])=>`<button class="tp ${flt===k?'on':''}" data-f="${k}">${l}</button>`).join('');
+ const q=$('q').value.trim().toLowerCase(),ks=Object.keys(R).filter(k=>k.toLowerCase().includes(q)&&(flt==='all'||(flt==='live')===!!R[k].matchStarted)).sort();
+ $('ml').innerHTML=ks.length?ks.map(k=>{const r=R[k],[c,l]=mstat(r),g=r.gameState,nm=g?seats(g).map(s=>s.name):Object.values(r.players||{}).map(p=>p.name);
+  return`<div class="m ${k===sel?'on':''}" data-k="${esc(k)}"><b>#${esc(k)}</b> <span class="chip ${c}">${l}</span>${r.isLocalMatch?' <span class="chip lo">Local</span>':''}<small>${esc(nm.join(', ')||'No players yet')}</small></div>`}).join(''):'<div class="empty">No matches found</div>'}
+
+// ===== board =====
+function boardHTML(g){
+ const S=seats(g),cur=g.currentTurnSeat,live=!(g.winnerSeat>=0);let h='';
+ for(let r=0;r<15;r++)for(let c=0;c<15;c++){if((r<6||r>8)&&(c<6||c>8))continue;
+  const p=PI[r+','+c],hc=HC[r+','+c];let bg='transparent',t='';
+  if(p!=null){bg=p%13===0?COL[p/13]:'#fff';if(p%13===8)t='☆'}else if(hc)bg=COL[hc[0]];
+  h+=`<div class="c" data-r="${r}" data-c="${c}" style="left:${c*100/15}%;top:${r*100/15}%;background:${bg}">${t}</div>`}
+ for(let i=0;i<4;i++){const s=S.find(x=>x.col===i);
+  h+=`<div class="yd ${s&&s.i===cur&&live?'turn':''}" data-y="${i}" style="--gc:${COL[i]};background:${COL[i]};left:${i==1||i==2?60:0}%;top:${i>1?60:0}%">${['26.3,26.3','59.7,26.3','26.3,59.7','59.7,59.7'].map(q=>`<i style="left:${q.split(',')[0]}%;top:${q.split(',')[1]}%"></i>`).join('')}${s?`<em>${s.i===cur&&live?'▶ ':''}${esc(s.name)}</em>`:''}</div>`}
+ h+=`<div id="ct" style="background:conic-gradient(from -45deg,${COL[1]} 0 90deg,${COL[2]} 90deg 180deg,${COL[3]} 180deg 270deg,${COL[0]} 270deg)"></div>`;
+ const tot={},ix={},xs=S.map(s=>s.pos.map((p,t)=>{const q=s.fp[t]||xy(s.col,p,t);tot[q+'']=(tot[q+'']||0)+1;return q}));
+ xs.forEach((a,si)=>a.forEach(([r,c],t)=>{const k=r+','+c,i=ix[k]=(ix[k]||0)+1,n=tot[k],o=n>1?(i-1-(n-1)/2)*.22:0,s=S[si];
+  h+=`<div class="tk ${tk&&tk.s===si&&tk.t===t?'s':''} ${s.i===cur&&live?'tn':''}" data-s="${si}" data-t="${t}" style="--gc:${COL[s.col]};left:${(c+o)*100/15}%;top:${r*100/15}%"><span style="background:${COL[s.col]}">${t+1}</span></div>`}));
+ return h}
+const posTxt=(p,fp)=>fp?'Custom cell':p<0?'Yard':p===56?'Home':p>50?'Home path '+(p-50):'Step '+p;
+function diceHTML(){const n=room().nextDice;return`<h4 style="text-align:center">Next dice — the value the next roll will show</h4><div class="dice">${[1,2,3,4,5,6].map(v=>`<button class="d ${n===v?'on':''}" data-d="${v}" aria-label="Set next dice to ${v}">${Array.from({length:9},(_,i)=>`<i class="${PIPS[v].includes(i)?'p':''}"></i>`).join('')}</button>`).join('')}</div>
+<div class="row" style="justify-content:center"><button data-d="r">Random</button><span class="hint">Current: <b>${n??'-'}</b> · the game generates a new value after every roll</span></div>`}
+function renderMid(){
+ if(!sel||!room()){$('mid').innerHTML='<div class="empty">Select a match from the list</div>';return}
+ const g=gs();let h='';
+ if(g){const S=seats(g),c=S.find(s=>s.i===g.currentTurnSeat),w=g.winnerSeat>=0?S.find(s=>s.i===g.winnerSeat):null;
+  h+=c?`<div class="turn" style="--gc:${COL[c.col]}"><i></i><b>${w?'Winner: '+esc(w.name):esc(c.name)+"'s turn"}</b><span>${w?'Match finished':g.phase==='waitingForRoll'?'Waiting for dice roll':'Waiting for a move'}</span></div>`:'';
+  h+=`<div id="bw"><div id="bd">${boardHTML(g)}</div></div><p class="hint" style="text-align:center">Select a token, then click any cell, home path or yard. Nothing is blocked, so any color can go anywhere. Press Esc to deselect.</p>`}
+ else h+='<div class="empty">This match has not started yet (no game state). Edit its players on the right.</div>';
+ $('mid').innerHTML=h+diceHTML()}
+
+// ===== side panel =====
+function tree(v,path,key){
+ if(v!==null&&typeof v==='object')return`<details ${path.length<2?'open':''}><summary>${esc(key)}</summary><div class="in">${Object.keys(v).map(k=>tree(v[k],path.concat(k),k)).join('')}</div></details>`;
+ const p=esc(path.join('/')),ty=typeof v==='boolean'?'b':typeof v==='number'?'n':'s';
+ return`<label class="lf"><span>${esc(key)}</span>${ty==='b'?`<input type="checkbox" data-p="${p}" data-ty="b" ${v?'checked':''}>`:`<input type="${ty==='n'?'number':'text'}" data-p="${p}" data-ty="${ty}" value="${esc(v)}">`}</label>`}
+function renderSide(){
+ if(!sel||!room()){$('side').innerHTML='<div class="empty">Select a match to edit it</div>';return}
+ const r=room(),g=gs(),[c,l]=mstat(r);
+ let h=`<div class="row" style="margin-bottom:10px"><b style="font-size:19px">#${esc(sel)}</b><span class="chip ${c}">${l}</span><span style="flex:1"></span><button class="dg" data-a="del">Delete match</button></div>
+ <div class="tabs"><button data-tab="p" class="${tab==='p'?'on':''}">Players & tokens</button><button data-tab="a" class="${tab==='a'?'on':''}">All data</button></div>`;
+ if(tab==='a')h+=`<p class="hint">Every value in this match. Changes save to Firebase immediately.</p>`+tree(r,[],'rooms/'+sel);
+ else if(g){const S=seats(g),t=g.currentTurnSeat;
+  h+=`<h4>Phase</h4><div class="seg"><button data-a="ph" data-v="waitingForRoll" class="${g.phase==='waitingForRoll'?'on':''}">Waiting for roll</button><button data-a="ph" data-v="waitingForMove" class="${g.phase==='waitingForMove'?'on':''}">Waiting for move</button></div>
+  <label class="row hint" style="margin-top:8px"><input type="checkbox" id="au" ${auto?'checked':''}> Capture opponent tokens when a token lands on them</label>
+  <h4>Players</h4>`+S.map(s=>`<div class="seat ${s.i===t?'t':''}" style="--gc:${COL[s.col]};border-left-color:${COL[s.col]}">
+  <div class="row"><input type="text" style="flex:1;min-width:100px" value="${esc(s.name)}" data-nm="${s.i}" aria-label="Player name"><button class="${s.i===t?'on':''}" data-a="turn" data-v="${s.i}">${s.i===t?'Current turn':'Give turn'}</button></div>
+  <div class="row">${s.pos.map((p,k)=>`<button class="tp ${tk&&tk.s===s.i&&tk.t===k?'on':''}" data-s="${s.i}" data-t="${k}" style="border-color:${COL[s.col]}">${k+1}: ${posTxt(p,s.fp[k])}</button>`).join('')}</div></div>`).join('');
+  if(tk&&S[tk.s])h+=`<div class="row"><span class="hint">Selected: ${esc(S[tk.s].name)} · token ${tk.t+1}</span><button data-a="yard">To own yard</button><button data-a="home">To home</button></div>`;
+  h+=`<h4>Match</h4><button class="dg" data-a="reset">Reset board</button>`}
+ else h+=`<h4>Lobby players</h4>`+Object.keys(r.players||{}).sort().map(k=>`<div class="lf"><span>${k} (${esc(r.players[k].color||'')})</span><input type="text" data-p="players/${k}/name" data-ty="s" value="${esc(r.players[k].name||'')}"></div>`).join('');
+ $('side').innerHTML=h}
+
+function renderAll(){
+ const a=document.activeElement;if(a&&a.matches&&a.matches('input[type=text],input[type=number]')&&a.closest('#side')){pend=1;return}
+ pend=0;renderList();renderMid();renderSide()}
+document.addEventListener('focusout',()=>{if(pend)setTimeout(renderAll,50)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&tk){tk=null;renderAll()}});
+
+// ===== actions: a token can be placed on ANY cell, home path or yard of ANY color =====
+function place(si,t,tg){
+ const g=gs(),S=seats(g),s=S[si],col=s.col;let p,fp=null;
+ if(tg.y!=null){p=-1;if(tg.y!==col)fp=(YB[tg.y][0]+(t<2?1.5:3.5))+','+(YB[tg.y][1]+(t%2?3.5:1.5))}
+ else if(tg.c)p=56;
+ else if(tg.a!=null){p=(tg.a-13*col+52)%52;if(p>50){p=50;fp=tg.r+','+tg.cc}}
+ else if(tg.k===col)p=51+tg.j;
+ else{p=((13*tg.k+50)%52-13*col+52)%52;if(p>50)p=50;fp=tg.r+','+tg.cc}
+ const u={};u['gameState/tokenPositions/'+s.cn+'/'+t]=p;u['gameState/freePositions/'+s.cn+'/'+t]=fp;
+ if(auto&&fp==null&&p>=0&&p<=50){const a=(p+13*col)%52;if(a%13&&a%13!==8)S.forEach(o=>{if(o.i!==si)o.pos.forEach((x,k)=>{if(x>=0&&x<=50&&(x+13*o.col)%52===a){u['gameState/tokenPositions/'+o.cn+'/'+k]=-1;u['gameState/freePositions/'+o.cn+'/'+k]=null}})})}
+ upd(u)}
+$('mid').addEventListener('click',e=>{
+ const d=e.target.closest('[data-d]');if(d){set('nextDice',d.dataset.d==='r'?1+Math.random()*6|0:+d.dataset.d);return}
+ const k=e.target.closest('.tk');if(k){const n={s:+k.dataset.s,t:+k.dataset.t};tk=tk&&tk.s===n.s&&tk.t===n.t?null:n;renderAll();return}
+ if(!e.target.closest('#bd'))return;
+ if(!tk)return toast('Select a token first');
+ const y=e.target.closest('[data-y]'),c=e.target.closest('[data-r]');let tg;
+ if(y)tg={y:+y.dataset.y};
+ else if(c){const r=+c.dataset.r,cc=+c.dataset.c,key=r+','+cc;
+  if(r>=6&&r<=8&&cc>=6&&cc<=8)tg={c:1};
+  else if(PI[key]!=null)tg={a:PI[key],r,cc};
+  else if(HC[key])tg={k:HC[key][0],j:HC[key][1]-51,r,cc};
+  else return}
+ else return;
+ place(tk.s,tk.t,tg)});
+$('side').addEventListener('click',e=>{
+ const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.tab){tab=b.dataset.tab;renderAll();return}
+ if(b.dataset.s!=null&&b.dataset.t!=null){tk={s:+b.dataset.s,t:+b.dataset.t};renderAll();return}
+ const a=b.dataset.a,g=gs();
+ if(a==='turn')set('gameState/currentTurnSeat',+b.dataset.v);
+ else if(a==='ph')set('gameState/phase',b.dataset.v);
+ else if(a==='yard'&&tk)place(tk.s,tk.t,{y:seats(g)[tk.s].col});
+ else if(a==='home'&&tk)place(tk.s,tk.t,{c:1});
+ else if(a==='reset'&&confirm('All tokens go back to the yard and the match restarts. Continue?')){const u={};seats(g).forEach(s=>{u['gameState/tokenPositions/'+s.cn]=[-1,-1,-1,-1];u['gameState/rollsSinceLastSix/'+s.cn]=0});
+  Object.assign(u,{'gameState/freePositions':null,'gameState/currentTurnSeat':0,'gameState/phase':'waitingForRoll','gameState/currentDice':0,'gameState/rollCount':0,'gameState/winnerSeat':-1,'gameState/finishRank':g.seatColors.map(()=>0),'gameState/noMoveOnLastRoll':false});upd(u)}
+ else if(a==='del'&&confirm('Match #'+sel+' will be deleted permanently. Continue?')){const k=sel;sel='';tk=null;db.ref('rooms/'+k).remove().catch(fail)}});
+$('side').addEventListener('change',e=>{
+ const t=e.target;if(t.id==='au'){auto=t.checked;return}
+ if(t.dataset.nm!=null){const i=+t.dataset.nm,v=t.value.trim().slice(0,20),g=gs(),u={['gameState/playerNames/'+i]:v},k=g.seatPlayerIndexes&&g.seatPlayerIndexes[i];
+  if(k!=null&&room().players&&room().players['player'+k])u['players/player'+k+'/name']=v;upd(u);return}
+ if(t.dataset.p){const ty=t.dataset.ty;set(t.dataset.p,ty==='b'?t.checked:ty==='n'?(t.value===''?0:+t.value):t.value)}});
+$('ml').addEventListener('click',e=>{const m=e.target.closest('[data-k]');if(m){sel=m.dataset.k;tk=null;renderAll()}});
+$('fl').addEventListener('click',e=>{const b=e.target.closest('[data-f]');if(b){flt=b.dataset.f;renderList()}});
+$('q').addEventListener('input',renderList);
+
+// ===== Firebase boot =====
+const ld=s=>new Promise((ok,no)=>{const e=document.createElement('script');e.src=s;e.onload=ok;e.onerror=no;document.head.appendChild(e)});
+(async()=>{
+ if(ADMIN_PIN&&prompt('Admin PIN')!==ADMIN_PIN){document.body.innerHTML='<p style="padding:30px">Wrong PIN.</p>';return}
+ const V='https://www.gstatic.com/firebasejs/10.12.2/firebase-';
+ for(const L of[['lib/firebase-app-compat.js','lib/firebase-database-compat.js'],[V+'app-compat.js',V+'database-compat.js']]){
+  if(window.firebase&&firebase.database)break;try{for(const u of L)await ld(u)}catch(e){}}
+ if(!(window.firebase&&firebase.database)){$('cs').textContent='Firebase SDK failed to load';$('cs').className='chip no';return}
+ firebase.initializeApp(firebaseConfig);db=firebase.database();
+ db.ref('.info/connected').on('value',s=>{const o=!!s.val();$('cs').textContent=o?'Connected':'Offline';$('cs').className='chip '+(o?'ok':'no')});
+ db.ref('rooms').on('value',s=>{R=s.val()||{};if(sel&&!R[sel]){sel='';tk=null}renderAll()},fail)})();
+</script></body></html>
